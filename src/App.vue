@@ -1,28 +1,48 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <Sidebar v-bind:routeArr="routeArr" />
+    <router-view id="router"></router-view>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Sidebar from './components/Sidebar'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    Sidebar
+  },
+  data() {
+    return {
+      routeArr: [
+        { route: "/", name: "Home" },
+        { route: "/timer", name: "Timer" },
+        { route: "/todo",  name: "Todo" },
+      ]
+    }
   }
 }
 </script>
 
-<style>
+<style lang="scss">
+@import './styles/colors.scss';
+@import './styles/global.scss';
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+
+  height: 100%;
+}
+
+#router {
+  height: 100%;
+  padding: 4px;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  overflow-y: scroll;
 }
 </style>

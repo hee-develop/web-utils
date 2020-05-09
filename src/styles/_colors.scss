@@ -1,0 +1,15 @@
+$colorBlack: #000024;
+$colorWhite: #FFFFDB;
+$colorPrimary: #E1BB84;
+$colorPrimaryDark: #472C12;
+$colorAccent: #DC4848;
+// dark mode
+$colorDmPrimary: #1E447B;
+$colorDmPrimaryDark: #B8D3ED;
+$colorDmAccent: #23B7B7;
+
+@mixin darkMode {
+  @media (prefers-color-scheme: dark) {
+    @content;
+  }
+}
