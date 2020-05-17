@@ -10,7 +10,11 @@
       </li>
     </ul>
   </nav>
-  <button id="btn-toggle-sidebar" @click="toggleSidebar()">MENU</button>
+  <a id="btn-toggle-sidebar" @click="toggleSidebar()">
+    <div id="btn-line-1" :class="{ 'sidebar-opened': sidebarVisible }"></div>
+    <div id="btn-line-2"></div>
+    <div id="btn-line-3" :class="{ 'sidebar-opened': sidebarVisible }"></div>
+  </a>
 </div>
 </template>
 
@@ -105,8 +109,30 @@ export default {
   }
 }
 
+// sidebar and sidebar's button
 #btn-toggle-sidebar {
-  margin-left: 4px;
+  display: inline-block;
+  padding: 6px;
+  cursor: pointer;
+
+  * {
+    width: 32px;
+    height: 4px;
+    margin: 6px;
+    border-radius: 8px;
+    background-color: $colorBlack;
+    transition: .5s;
+  }
+
+  .sidebar-opened {
+    width: 20px;
+    &#btn-line-1 {
+      transform: translate(-2px, 4px) rotate(-45deg);
+    }
+    &#btn-line-3 {
+      transform: translate(-2px, -4px) rotate(45deg);
+    }
+  }
 }
 
 // router selector
