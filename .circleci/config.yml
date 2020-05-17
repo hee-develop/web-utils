@@ -9,6 +9,6 @@ jobs:
       - run: npm run build
 
 workflows:
-  build:
+  circle-build:
     jobs:
       - build
