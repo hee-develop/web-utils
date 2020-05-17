@@ -1,5 +1,6 @@
 <template>
 <div id="sidebar-layout" :class="{ 'sidebar_hide': !sidebarVisible }">
+  <!-- navigation body -->
   <nav id="sidebar-navigation">
     <ul id="sidebar-list">
       <li id="sidebar-title">Web Utils</li>
@@ -10,6 +11,7 @@
       </li>
     </ul>
   </nav>
+  <!-- hamburger button for toggle sidebar -->
   <a id="btn-toggle-sidebar" @click="toggleSidebar()">
     <div id="btn-line-1" :class="{ 'sidebar-opened': sidebarVisible }"></div>
     <div id="btn-line-2"></div>
@@ -23,7 +25,6 @@ export default {
   name: 'Sidebar',
   data() {
     return {
-      show: true,
       sidebarVisible: true,
     }
   },
@@ -31,15 +32,9 @@ export default {
     routeArr: Array,
   },
   methods: {
-    test() {
-      if (this.show)
-      
-        document.getElementById("sidebar").style.width="200px";
-      this.show = !this.show;
-    },
     toggleSidebar() {
       this.sidebarVisible = !this.sidebarVisible;
-    }
+    },
   }
 }
 </script>
@@ -48,6 +43,7 @@ export default {
 @import "../styles/colors.scss";
 
 #sidebar {
+  // sidebar layout
   &-layout {
     height: 100%;
     position: absolute;
@@ -109,7 +105,7 @@ export default {
   }
 }
 
-// sidebar and sidebar's button
+// sidebar's button
 #btn-toggle-sidebar {
   display: inline-block;
   padding: 6px;
@@ -124,8 +120,10 @@ export default {
     transition: .5s;
   }
 
+  // transform button
   .sidebar-opened {
     width: 20px;
+
     &#btn-line-1 {
       transform: translate(-2px, 4px) rotate(-45deg);
     }
