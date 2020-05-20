@@ -5,8 +5,12 @@
       id="alert-layout">
       <div>
         <h3 id="alert-title">Time up!</h3>
-        <button class="emphasis" @click="flags.timeUp = false;">Close</button>
-        <button>Reset timer</button>
+        <button class="btn btn-emphasis" @click="flags.timeUp = false;">
+          Close
+        </button>
+        <button class="btn">
+          Reset
+        </button>
       </div>
     </div>
     <!-- title -->
@@ -156,37 +160,36 @@ export default {
 }
 </script>
 
-<style scoped>
-/* alert layout */
-#alert-layout {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-color: #311D;
-  display: flex;
-  color: white;
-}
-#alert-title {
-  font-size: 2em;
-  text-align: center;
-}
-#alert-layout > div {
-  margin: auto;
-  display: flex;
-  flex-direction: column;
-}
-#alert-layout button {
-  box-shadow: none;
-  margin: 4px 2px;
-}
+<style lang="scss">
+@import '../styles/colors.scss';
+@import '../styles/global.scss';
 
-/* title */
-h1 {
-  text-align: center;
+/* alert layout */
+#alert {
+  &-title {
+    font-size: 2.4em;
+    text-align: center;
+  }
+
+  &-layout {
+    display: flex;
+    position: absolute;
+    width: 100%; height: 100%;
+    top: 0; bottom: 0; left: 0; right: 0;
+    background-color: rgba($colorPrimary, 0.6);
+    color: $colorAccent;
+    z-index: 2;
+
+    // center layout
+    > div {
+      margin: auto;
+    }
+
+    .btn {
+      box-shadow: none;
+      margin: 0 6px;
+    }
+  }
 }
 
 /* timer */
