@@ -79,7 +79,7 @@ export default {
     float: left;
     color: $colorWhite;
     font-size: 1.2em;
-    box-shadow: 2px 0 1px $colorBlack+88;
+    box-shadow: 2px 0 1px rgba($colorBlack, 0.6);
 
     a {
       display: block;
