@@ -96,6 +96,9 @@ export default {
       timerId: null,
     };
   },
+  mounted() {
+    document.title = this.title;
+  },
   methods: {
     edit() {
       this.flags.isEditing = true;
