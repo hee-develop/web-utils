@@ -28,7 +28,7 @@
         <div>
           <span v-if="!flags.isEditing"
             class="time-number number-hour"
-            @click="flags.isEditing = true;">
+            @click="edit()">
             {{ currTime.hours }}
           </span>
           <input v-else
@@ -42,7 +42,7 @@
         <div>
           <span v-if="!flags.isEditing"
             class="time-number number-minute"
-            @click="flags.isEditing = true;">
+            @click="edit()">
             {{ currTime.minutes }}
           </span>
           <input v-else
@@ -56,7 +56,7 @@
         <div>
           <span v-if="!flags.isEditing"
             class="time-number number-second"
-            @click="flags.isEditing = true;">
+            @click="edit()">
             {{ currTime.seconds }}
           </span>
           <input v-else
@@ -97,6 +97,15 @@ export default {
     };
   },
   methods: {
+    edit() {
+      this.flags.isEditing = true;
+      
+      const times = this.currTime;
+      times.hours = Number(times.hours);
+      times.minutes = Number(times.minutes);
+      times.seconds = Number(times.seconds);
+    },
+
     // update time value when editor disabled
     closeEdit() {
       if (!this.flags.isEditing) return;
@@ -116,6 +125,9 @@ export default {
       this.flags.isEditing = false;
       this.flags.isStarted = false;
       this.flags.timeUp = false;
+
+      // translate to 2 digits number
+      this.numberToString(this.currTime, this.timeInSecond);
     },
 
     startTimer() {
@@ -133,11 +145,9 @@ export default {
       clearInterval(this.timerId);
       this.timerId = null;
       this.flags.isStarted = false;
-      this.timeInSecond = 0;
     },
     resetTimer() {
       this.timeInSecond = this.savedTimeInSecond;
-      // this.flags.timeUp = false;
       this.clearAlert();
     },
     alertTimer() {
@@ -150,6 +160,11 @@ export default {
     },
 
     // fill zero for adjust width (ex: 2 -> 02)
+    numberToString(currTime, timeInSecond) {
+      currTime.hours = this.fillZero(Math.floor(timeInSecond / 3600));
+      currTime.minutes = this.fillZero(Math.floor(timeInSecond / 60) % 60);
+      currTime.seconds = this.fillZero(timeInSecond % 60);
+    },
     fillZero(number) {
       const zeroAndNumber = Array(2).join('0') + number;
       return zeroAndNumber.slice(-2);
@@ -162,10 +177,8 @@ export default {
         this.alertTimer();
         return;
       }
-
-      this.currTime.hours = this.fillZero(Math.floor(this.timeInSecond / 3600));
-      this.currTime.minutes = this.fillZero(Math.floor(this.timeInSecond / 60) % 60);
-      this.currTime.seconds = this.fillZero(this.timeInSecond % 60);
+      // translate to 2 digits number
+      this.numberToString(this.currTime, this.timeInSecond);
     }
   },
 }
