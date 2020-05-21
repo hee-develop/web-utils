@@ -15,16 +15,14 @@
         </div>
       </div>
     </div>
-    <!-- title -->
-    <h1 id="timer-title">{{ title }}</h1>
     <!-- timer -->
     <div id="timer-layout">
       <!-- editing message -->
-      <h4 id="noti-editing" :class="{'hide': !flags.isEditing}">
+      <h4 id="timer-editing" :class="{'hide': !flags.isEditing}">
         Now Editing...
       </h4>
       <!-- timer body -->
-      <div id="curr-time">
+      <div id="timer-number-layout">
         <div>
           <span v-if="!flags.isEditing"
             class="time-number number-hour"
@@ -67,7 +65,7 @@
             @blur="closeEdit()">
         </div>
       </div>
-      <div id="button-layout">
+      <div id="timer-button-layout">
         <button v-if="!flags.isStarted"
           class="btn btn-emphasis"
           @click="startTimer()">
@@ -242,17 +240,35 @@ export default {
 }
 
 /* timer */
-#timer-layout {
-  margin: auto;
-  text-align: center;
-  padding-bottom: 60px;
+#timer {
+  // timer layout
+  &-layout {
+    margin: auto;
+    text-align: center;
+    padding-bottom: 60px;
+  }
+
+  // timer editing notification
+  &-editing {
+    margin: 0 2px;
+    text-align: center;
+    font-size: 2em;
+  }
+
+  // timer button layout
+  &-button-layout {
+    .btn {
+      font-size: 2em;
+      border-width: 4px;
+    }
+  }
 }
-#curr-time,
+#timer-number-layout,
 input.time-number {
   font-size: 8rem;
   font-family: monospace;
 }
-#curr-time * {
+#timer-number-layout * {
   display: inline-block;
 }
 // timer number
@@ -271,6 +287,7 @@ input.time-number {
 input.time-number {
   opacity: 0.5;
 }
+
 /* hide spinner button in input */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
@@ -280,19 +297,5 @@ input::-webkit-inner-spin-button {
 /* for firefox */
 input[type=number] {
   -moz-appearance: textfield;
-}
-
-/* editing notification */
-#noti-editing {
-  margin: 0 2px;
-  text-align: center;
-  font-size: 2em;
-}
-
-#button-layout {
-  .btn {
-    font-size: 2em;
-    border-width: 4px;
-  }
 }
 </style>
