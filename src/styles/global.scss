@@ -4,8 +4,8 @@
 html, body {
   height: 100%;
   margin: 0;
+  background-color: $colorWhite;
   color: $colorBlack;
-
   @include darkMode {
     background-color: $colorBlack;
     color: $colorWhite;
@@ -17,7 +17,6 @@ a {
   &:link, &:visited, &:hover, :active {
     text-decoration: none;
     color: $colorBlack;
-
     @include darkMode {
       color: $colorWhite;
     }
@@ -33,19 +32,19 @@ a {
   margin: 2px;
   border: 2px solid $colorBlack;
   border-radius: 6px;
-  background-color: white;
+  background-color: #0000;
   &:active {
     background-color: $colorBlack;
-    color: white;
+    color: $colorWhite;
   }
   // accent button
   &-emphasis {
-    color: white;
+    color: $colorAccent;
     border-color: $colorAccent;
-    background-color: $colorAccent;
+    background-color: transparent;
     &:active {
-      background-color: white;
-      color: $colorAccent;
+      background-color: $colorAccent;
+      color: $colorWhite;
     }
   }
 
