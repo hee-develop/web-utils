@@ -100,6 +100,7 @@ export default {
   methods: {
     edit() {
       this.flags.isEditing = true;
+      this.stopTimer();
       
       const times = this.currTime;
       times.hours = Number(times.hours);
@@ -135,6 +136,7 @@ export default {
       if (this.flags.isStarted) return;
 
       this.flags.isStarted = true;
+      this.flags.isEditing = false;
       this.flags.timeUp = false;
       this.savedTimeInSecond = this.timeInSecond;
       this.timeInSecond--;
