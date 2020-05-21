@@ -189,7 +189,6 @@ export default {
 
 <style lang="scss">
 @import '../styles/colors.scss';
-@import '../styles/global.scss';
 
 /* alert layout */
 #alert {
@@ -209,11 +208,11 @@ export default {
     height: 24%;
     padding: 24px;
     flex-direction: column;
-    background-color: $colorPrimaryDark;
+    background-color: $colorBlack;
     color: $colorWhite;
     margin: auto;
     border-radius: 16px;
-    box-shadow: 0 0 4px rgba($colorBlack, 0.6);
+    box-shadow: 0 0 4px rgba($colorBlack, 0.4);
   }
 
   &-title {
@@ -233,6 +232,8 @@ export default {
       box-shadow: none;
       margin: 0 6px;
       font-size: 1.4em;
+      color: $colorWhite;
+      border-color: $colorWhite;
     }
     .btn-emphasis {
       margin-right: 16px;
@@ -248,7 +249,7 @@ export default {
 }
 #curr-time,
 input.time-number {
-  font-size: 4rem;
+  font-size: 8rem;
   font-family: monospace;
 }
 #curr-time * {
@@ -263,7 +264,8 @@ input.time-number {
 .time-number,
 input.time-number {
   width: 1.2em;
-  text-align: center;
+  text-align: right;
+  background-color: transparent;
 }
 // editing
 input.time-number {
@@ -284,5 +286,13 @@ input[type=number] {
 #noti-editing {
   margin: 0 2px;
   text-align: center;
+  font-size: 2em;
+}
+
+#button-layout {
+  .btn {
+    font-size: 2em;
+    border-width: 4px;
+  }
 }
 </style>
