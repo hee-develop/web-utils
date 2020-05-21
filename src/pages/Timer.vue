@@ -3,18 +3,20 @@
     <!-- timeup alert -->
     <div v-if="flags.timeUp"
       id="alert-layout">
-      <div>
+      <div id="alert-center-layout">
         <h3 id="alert-title">Time up!</h3>
-        <button class="btn btn-emphasis" @click="flags.timeUp = false;">
-          Close
-        </button>
-        <button class="btn">
-          Reset
-        </button>
+        <div id="alert-button-layout">
+          <button class="btn btn-emphasis" @click="clearAlert()">
+            Close
+          </button>
+          <button class="btn" @click="resetTimer()">
+            Reset
+          </button>
+        </div>
       </div>
     </div>
     <!-- title -->
-    <h1>{{ title }}</h1>
+    <h1 id="timer-title">{{ title }}</h1>
     <!-- timer -->
     <div id="timer-layout">
       <!-- editing message -->
@@ -108,7 +110,6 @@ export default {
       if (times.minutes > 59) times.minutes = 59;
       if (times.seconds > 59) times.seconds = 59;
 
-
       this.timeInSecond = Number(times.hours * 3600) +
                           Number(times.minutes * 60) +
                           Number(times.seconds);
@@ -132,10 +133,20 @@ export default {
       clearInterval(this.timerId);
       this.timerId = null;
       this.flags.isStarted = false;
+      this.timeInSecond = 0;
+    },
+    resetTimer() {
+      this.timeInSecond = this.savedTimeInSecond;
+      // this.flags.timeUp = false;
+      this.clearAlert();
     },
     alertTimer() {
       this.stopTimer();
       this.flags.timeUp = true;
+    },
+    
+    clearAlert() {
+      this.flags.timeUp = false;
     },
 
     // fill zero for adjust width (ex: 2 -> 02)
@@ -166,36 +177,58 @@ export default {
 
 /* alert layout */
 #alert {
-  &-title {
-    font-size: 2.4em;
-    text-align: center;
-  }
-
   &-layout {
     display: flex;
-    position: absolute;
+    position: fixed;
     width: 100%; height: 100%;
     top: 0; bottom: 0; left: 0; right: 0;
     background-color: rgba($colorPrimary, 0.6);
-    color: $colorAccent;
     z-index: 2;
+  }
 
-    // center layout
-    > div {
-      margin: auto;
+  // center layout
+  &-center-layout {
+    display: flex;
+    width: 32%;
+    height: 24%;
+    padding: 24px;
+    flex-direction: column;
+    background-color: $colorPrimaryDark;
+    color: $colorWhite;
+    margin: auto;
+    border-radius: 16px;
+    box-shadow: 0 0 4px rgba($colorBlack, 0.6);
+  }
+
+  &-title {
+    font-size: 3.2em;
+    text-align: center;
+    margin: 8px 0 0 0;
+  }
+
+  &-button-layout {
+    margin: {
+      top: auto;
+      bottom: 16px;
     }
+    text-align: center;
 
     .btn {
       box-shadow: none;
       margin: 0 6px;
+      font-size: 1.4em;
+    }
+    .btn-emphasis {
+      margin-right: 16px;
     }
   }
 }
 
 /* timer */
 #timer-layout {
-  margin: auto auto 50% auto;
+  margin: auto;
   text-align: center;
+  padding-bottom: 60px;
 }
 #curr-time,
 input.time-number {
@@ -205,6 +238,7 @@ input.time-number {
 #curr-time * {
   display: inline-block;
 }
+// timer number
 .time-number {
   padding: 0;
   box-sizing: border-box;
@@ -215,6 +249,7 @@ input.time-number {
   width: 1.2em;
   text-align: center;
 }
+// editing
 input.time-number {
   opacity: 0.5;
 }
