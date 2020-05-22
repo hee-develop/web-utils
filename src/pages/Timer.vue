@@ -157,7 +157,6 @@ export default {
       this.stopTimer();
       this.flags.timeUp = true;
     },
-    
     clearAlert() {
       this.flags.timeUp = false;
     },
@@ -234,9 +233,26 @@ export default {
       font-size: 1.4em;
       color: $colorWhite;
       border-color: $colorWhite;
+      
+      &:hover,
+      &:active {
+        background-color: $colorWhite;
+        color: $colorBlack;
+      }
     }
     .btn-emphasis {
       margin-right: 16px;
+
+      &:hover {
+        background-color: $colorAccent;
+        border-color: $colorAccent;
+        color: $colorWhite;
+      }
+      &:active {
+        background-color: $colorAccent_dark;
+        border-color: $colorAccent_dark;
+        color: $colorWhite;
+      }
     }
   }
 }
