@@ -3,26 +3,30 @@
     <!-- timeup alert -->
     <div v-if="flags.timeUp"
       id="alert-layout">
-      <div>
+      <div id="alert-center-layout">
         <h3 id="alert-title">Time up!</h3>
-        <button class="emphasis" @click="flags.timeUp = false;">Close</button>
-        <button>Reset timer</button>
+        <div id="alert-button-layout">
+          <button class="btn btn-emphasis" @click="clearAlert()">
+            Close
+          </button>
+          <button class="btn" @click="resetTimer()">
+            Reset
+          </button>
+        </div>
       </div>
     </div>
-    <!-- title -->
-    <h1>{{ title }}</h1>
     <!-- timer -->
     <div id="timer-layout">
       <!-- editing message -->
-      <h4 id="noti-editing" :class="{'hide': !flags.isEditing}">
+      <h4 id="timer-editing" :class="{'hide': !flags.isEditing}">
         Now Editing...
       </h4>
       <!-- timer body -->
-      <div id="curr-time">
+      <div id="timer-number-layout">
         <div>
           <span v-if="!flags.isEditing"
             class="time-number number-hour"
-            @click="flags.isEditing = true;">
+            @click="edit()">
             {{ currTime.hours }}
           </span>
           <input v-else
@@ -36,7 +40,7 @@
         <div>
           <span v-if="!flags.isEditing"
             class="time-number number-minute"
-            @click="flags.isEditing = true;">
+            @click="edit()">
             {{ currTime.minutes }}
           </span>
           <input v-else
@@ -50,7 +54,7 @@
         <div>
           <span v-if="!flags.isEditing"
             class="time-number number-second"
-            @click="flags.isEditing = true;">
+            @click="edit()">
             {{ currTime.seconds }}
           </span>
           <input v-else
@@ -61,7 +65,7 @@
             @blur="closeEdit()">
         </div>
       </div>
-      <div id="button-layout">
+      <div id="timer-button-layout">
         <button v-if="!flags.isStarted"
           class="btn btn-emphasis"
           @click="startTimer()">
@@ -90,7 +94,20 @@ export default {
       timerId: null,
     };
   },
+  mounted() {
+    document.title = this.title;
+  },
   methods: {
+    edit() {
+      this.flags.isEditing = true;
+      this.stopTimer();
+      
+      const times = this.currTime;
+      times.hours = Number(times.hours);
+      times.minutes = Number(times.minutes);
+      times.seconds = Number(times.seconds);
+    },
+
     // update time value when editor disabled
     closeEdit() {
       if (!this.flags.isEditing) return;
@@ -104,19 +121,22 @@ export default {
       if (times.minutes > 59) times.minutes = 59;
       if (times.seconds > 59) times.seconds = 59;
 
-
       this.timeInSecond = Number(times.hours * 3600) +
                           Number(times.minutes * 60) +
                           Number(times.seconds);
       this.flags.isEditing = false;
       this.flags.isStarted = false;
       this.flags.timeUp = false;
+
+      // translate to 2 digits number
+      this.numberToString(this.currTime, this.timeInSecond);
     },
 
     startTimer() {
       if (this.flags.isStarted) return;
 
       this.flags.isStarted = true;
+      this.flags.isEditing = false;
       this.flags.timeUp = false;
       this.savedTimeInSecond = this.timeInSecond;
       this.timeInSecond--;
@@ -129,12 +149,25 @@ export default {
       this.timerId = null;
       this.flags.isStarted = false;
     },
+    resetTimer() {
+      this.timeInSecond = this.savedTimeInSecond;
+      this.clearAlert();
+    },
     alertTimer() {
       this.stopTimer();
       this.flags.timeUp = true;
     },
+    
+    clearAlert() {
+      this.flags.timeUp = false;
+    },
 
     // fill zero for adjust width (ex: 2 -> 02)
+    numberToString(currTime, timeInSecond) {
+      currTime.hours = this.fillZero(Math.floor(timeInSecond / 3600));
+      currTime.minutes = this.fillZero(Math.floor(timeInSecond / 60) % 60);
+      currTime.seconds = this.fillZero(timeInSecond % 60);
+    },
     fillZero(number) {
       const zeroAndNumber = Array(2).join('0') + number;
       return zeroAndNumber.slice(-2);
@@ -147,61 +180,100 @@ export default {
         this.alertTimer();
         return;
       }
-
-      this.currTime.hours = this.fillZero(Math.floor(this.timeInSecond / 3600));
-      this.currTime.minutes = this.fillZero(Math.floor(this.timeInSecond / 60) % 60);
-      this.currTime.seconds = this.fillZero(this.timeInSecond % 60);
+      // translate to 2 digits number
+      this.numberToString(this.currTime, this.timeInSecond);
     }
   },
 }
 </script>
 
-<style scoped>
-/* alert layout */
-#alert-layout {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-color: #311D;
-  display: flex;
-  color: white;
-}
-#alert-title {
-  font-size: 2em;
-  text-align: center;
-}
-#alert-layout > div {
-  margin: auto;
-  display: flex;
-  flex-direction: column;
-}
-#alert-layout button {
-  box-shadow: none;
-  margin: 4px 2px;
-}
+<style lang="scss">
+@import '../styles/colors.scss';
 
-/* title */
-h1 {
-  text-align: center;
+/* alert layout */
+#alert {
+  &-layout {
+    display: flex;
+    position: fixed;
+    width: 100%; height: 100%;
+    top: 0; bottom: 0; left: 0; right: 0;
+    background-color: rgba($colorPrimary, 0.6);
+    z-index: 2;
+  }
+
+  // center layout
+  &-center-layout {
+    display: flex;
+    width: 32%;
+    height: 24%;
+    padding: 24px;
+    flex-direction: column;
+    background-color: $colorBlack;
+    color: $colorWhite;
+    margin: auto;
+    border-radius: 16px;
+    box-shadow: 0 0 4px rgba($colorBlack, 0.4);
+  }
+
+  &-title {
+    font-size: 3.2em;
+    text-align: center;
+    margin: 8px 0 0 0;
+  }
+
+  &-button-layout {
+    margin: {
+      top: auto;
+      bottom: 16px;
+    }
+    text-align: center;
+
+    .btn {
+      box-shadow: none;
+      margin: 0 6px;
+      font-size: 1.4em;
+      color: $colorWhite;
+      border-color: $colorWhite;
+    }
+    .btn-emphasis {
+      margin-right: 16px;
+    }
+  }
 }
 
 /* timer */
-#timer-layout {
-  margin: auto auto 50% auto;
-  text-align: center;
+#timer {
+  // timer layout
+  &-layout {
+    margin: auto;
+    text-align: center;
+    padding-bottom: 60px;
+  }
+
+  // timer editing notification
+  &-editing {
+    margin: 0 2px;
+    text-align: center;
+    font-size: 2em;
+  }
+
+  // timer button layout
+  &-button-layout {
+    .btn {
+      font-size: 2em;
+      border-width: 4px;
+    }
+  }
 }
-#curr-time,
+#timer-number-layout,
 input.time-number {
-  font-size: 4rem;
+  font-size: 8rem;
   font-family: monospace;
 }
-#curr-time * {
+#timer-number-layout * {
   display: inline-block;
 }
+// timer number
 .time-number {
   padding: 0;
   box-sizing: border-box;
@@ -210,11 +282,14 @@ input.time-number {
 .time-number,
 input.time-number {
   width: 1.2em;
-  text-align: center;
+  text-align: right;
+  background-color: transparent;
 }
+// editing
 input.time-number {
   opacity: 0.5;
 }
+
 /* hide spinner button in input */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
@@ -224,11 +299,5 @@ input::-webkit-inner-spin-button {
 /* for firefox */
 input[type=number] {
   -moz-appearance: textfield;
-}
-
-/* editing notification */
-#noti-editing {
-  margin: 0 2px;
-  text-align: center;
 }
 </style>

@@ -33,6 +33,8 @@ a {
   border: 2px solid $colorBlack;
   border-radius: 6px;
   background-color: #0000;
+  cursor: pointer;
+  &:hover,
   &:active {
     background-color: $colorBlack;
     color: $colorWhite;
@@ -42,9 +44,13 @@ a {
     color: $colorAccent;
     border-color: $colorAccent;
     background-color: transparent;
-    &:active {
+    &:hover {
       background-color: $colorAccent;
       color: $colorWhite;
+    }
+    &:active {
+      background-color: $colorAccent_dark;
+      border-color: $colorAccent_dark;
     }
   }
 
