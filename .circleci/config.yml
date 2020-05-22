@@ -7,8 +7,24 @@ jobs:
       - checkout
       - run: npm install
       - run: npm run build
+  
+  deploy:
+    docker:
+      - image: 'circleci/node:latest'
+    steps:
+      - checkout
+      - run: npm install
+      - run: npm run build
+      - run: |
+            if [ "$CIRCLE_BRANCH" = "master" ]; then
+              ssh git@github.com:hee-develop/web-utils.git "git subtree push --prefix dist origin gh-pages"
+            fi
 
 workflows:
   circle-build:
     jobs:
-      - build
+      - build:
+        filters:
+          branches:
+            ignore:
+              - gh-pages
