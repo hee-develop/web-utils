@@ -5,8 +5,11 @@ $colorPrimaryDark: #472C12;
 $colorAccent: #DC4848;
 // dark mode
 $colorDmPrimary: #1E447B;
+$colorDmPrimary_light: #5288D5;
 $colorDmPrimaryDark: #B8D3ED;
+$colorDmPrimaryDark_light: #D4E4F4;
 $colorDmAccent: #23B7B7;
+$colorDmAccent_light: #6BE2E2;
 
 @mixin darkMode {
   @media (prefers-color-scheme: dark) {
