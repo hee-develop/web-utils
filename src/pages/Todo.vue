@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h1 id="title">{{ title }}</h1>
     <ul class="todo-list-layout">
       <!-- input -->
       <li class="todo-list-item todo-adder">
@@ -35,9 +34,9 @@
 <script>
 export default {
   name: 'todo-page',
+  title: "TODO",
   data() {
     return {
-      title: "TODO",
       todoArr: [{
         id: -1,
         content: "apple",

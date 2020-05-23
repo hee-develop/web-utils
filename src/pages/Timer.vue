@@ -84,18 +84,15 @@
 <script>
 export default {
   name: 'timer-page',
+  title: "TIMER",
   data() {
     return {
-      title: "TIMER",
       currTime: { hours: "00", minutes: "00", seconds: "00" },
       timeInSecond: 0,
       savedTimeInSecond: 0,
       flags: { isEditing: false, isStarted: false, timeUp: false },
       timerId: null,
     };
-  },
-  mounted() {
-    document.title = this.title;
   },
   methods: {
     edit() {
