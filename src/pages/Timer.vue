@@ -72,7 +72,7 @@
           Start
         </button>
         <button v-else
-          class="btn emphasis"
+          class="btn btn-emphasis"
           @click="stopTimer()">
           Stop
         </button>
@@ -154,7 +154,6 @@ export default {
       this.stopTimer();
       this.flags.timeUp = true;
     },
-    
     clearAlert() {
       this.flags.timeUp = false;
     },
@@ -196,6 +195,10 @@ export default {
     top: 0; bottom: 0; left: 0; right: 0;
     background-color: rgba($colorPrimary, 0.6);
     z-index: 2;
+
+    @include darkMode {
+      background-color: rgba($colorDmPrimary, 0.4);
+    }
   }
 
   // center layout
@@ -210,6 +213,11 @@ export default {
     margin: auto;
     border-radius: 16px;
     box-shadow: 0 0 4px rgba($colorBlack, 0.4);
+
+    @include darkMode {
+      background-color: $colorWhite;
+      color: $colorBlack;
+    }
   }
 
   &-title {
@@ -229,11 +237,61 @@ export default {
       box-shadow: none;
       margin: 0 6px;
       font-size: 1.4em;
-      color: $colorWhite;
-      border-color: $colorWhite;
+
+      &-emphasis {
+        margin-right: 16px;
+      }
     }
-    .btn-emphasis {
-      margin-right: 16px;
+  }
+}
+
+.btn {
+  color: $colorWhite;
+  border-color: $colorWhite;
+
+  &:hover,
+  &:active {
+    background-color: $colorWhite;
+    color: $colorBlack;
+  }
+
+  &-emphasis {
+    &:hover {
+      background-color: $colorAccent;
+      border-color: $colorAccent;
+      color: $colorWhite;
+    }
+    &:active {
+      background-color: $colorAccent_dark;
+      border-color: $colorAccent_dark;
+      color: $colorWhite;
+    }
+  }
+
+  @include darkMode {
+    color: $colorBlack;
+    border-color: $colorBlack;
+    background-color: transparent;
+    &:hover,
+    &:active {
+      background-color: $colorBlack;
+      color: $colorWhite;
+    }
+
+    &-emphasis {
+      color: $colorDmAccent;
+      border-color: $colorDmAccent;
+
+      &:hover {
+        background-color: $colorDmAccent;
+        border-color: $colorDmAccent;
+        color: $colorWhite;
+      }
+      &:active {
+        background-color: $colorDmAccent_light;
+        border-color: $colorDmAccent_light;
+        color: $colorWhite;
+      }
     }
   }
 }
@@ -266,6 +324,11 @@ export default {
 input.time-number {
   font-size: 8rem;
   font-family: monospace;
+  color: $colorBlack;
+  
+  @include darkMode {
+    color: $colorWhite;
+  }
 }
 #timer-number-layout * {
   display: inline-block;
@@ -285,6 +348,10 @@ input.time-number {
 // editing
 input.time-number {
   opacity: 0.5;
+
+  @include darkMode {
+    opacity: 0.6;
+  }
 }
 
 /* hide spinner button in input */
