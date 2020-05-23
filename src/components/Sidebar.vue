@@ -81,6 +81,12 @@ export default {
     font-size: 1.2em;
     box-shadow: 2px 0 1px rgba($colorBlack, 0.6);
 
+    @include darkMode {
+      background-color: $colorWhite;
+      color: $colorBlack;
+      box-shadow: 2px 0 1px rgba($colorWhite, 0.6);
+    }
+
     a {
       display: block;
       color: $colorWhite;
@@ -89,6 +95,10 @@ export default {
         bottom: 8px;
         left: 4px;
         right: 6px;
+      }
+
+      @include darkMode {
+        color: $colorBlack;
       }
     }
   }
@@ -118,6 +128,10 @@ export default {
     border-radius: 8px;
     background-color: $colorBlack;
     transition: .5s;
+
+    @include darkMode {
+      background-color: $colorWhite;
+    }
   }
 
   // transform button
@@ -141,6 +155,11 @@ export default {
     font-weight: bold;
     &::before {
       content: "> ";
+    }
+
+    @include darkMode {
+      background-color: $colorBlack;
+      color: $colorWhite !important;
     }
   }
 }
