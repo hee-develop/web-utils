@@ -259,6 +259,9 @@ export default {
   }
 
   &-emphasis {
+    color: $colorAccent;
+    border-color: $colorAccent;
+
     &:hover {
       background-color: $colorAccent;
       border-color: $colorAccent;
