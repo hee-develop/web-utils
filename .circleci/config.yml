@@ -1,0 +1,19 @@
+version: 2.1
+jobs:
+  ignore-this-branch:
+    docker:
+      - image: 'circleci/node:latest'
+    steps:
+      - run:
+          command: echo "THIS BRANCH DOESN'T RUN CIRCLECI"
+
+workflows:
+  circle-build:
+    jobs:
+      - ignore-this-branch:
+          filters:
+            branches:
+              ignore:
+                - gh-pages
+
+  version: 2.1
